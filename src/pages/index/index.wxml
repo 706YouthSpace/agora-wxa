@@ -129,13 +129,21 @@
                             <view class="flex personal-general-desc" hover-class="none" hover-stop-propagation="false">
                                 <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
                                     <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
-                                        家乡:
+                                        家乡
                                     </view>
                                 </view>
                                 <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
                                     <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
                                         {{user.profile.province}} {{user.profile.city}}
                                     </view>
+                                </view>
+                            </view>
+                            <view id="profile-detail-btn" hover-class="none" hover-stop-propagation="false">
+                                <view class="" hover-class="none" hover-stop-propagation="false">
+                                    <button class="cu-btn bg-grey shadow-blur round" bind:tap="gotoProfileEditing">
+                                        <view wx:if="{{user.activated}}">修改资料</view>
+                                        <view wx:else>填写详细资料，申请成为正式会员</view>
+                                    </button>
                                 </view>
                             </view>
                         </view>
@@ -159,9 +167,7 @@
                             {{item.profile.avatarUrl ? '' : (item.profile.nickName[0] || item._id[0])}}
                         </view>
                     </view>
-                    <button class="cu-btn bg-grey shadow text-right" bindtap="gotoContact">
-                        更多
-                    </button>
+                    <button class="cu-btn bg-grey shadow text-right" bindtap="gotoPro">更多</button>
                 </view>
             </view>
             <view class="cu-card" hover-class="none" hover-stop-propagation="false">

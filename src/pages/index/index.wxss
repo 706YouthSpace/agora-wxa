@@ -68,3 +68,8 @@ text{
     word-break: keep-all;
     word-wrap: break-word;
 }    
+
+#profile-detail-btn{
+    margin-top: 10rpx;
+    float: right;
+}
