@@ -32,7 +32,7 @@
                             <view class="cu-bar bg-shadeBottom"></view>
                             <view class="cu-avatar round xl shadow bg-black shadow-lg" style="background-image:url({{item.profile.avatarUrl}});">
                                 {{item.profile.avatarUrl ? '' : (item.profile.nickName[0] || item._id[0])}}
-                                <view wx:if="{{item.profile.gender || item.profile.gender === false}}" class="cu-tag {{item.profile.gender === 'female' ? 'badge cuIcon-female bg-pink' : ''}} {{item.profile.gender === 'male' ? 'badge cuIcon-male bg-blue' : ''}}"></view>
+                                <!-- <view wx:if="{{item.profile.gender || item.profile.gender === false}}" class="cu-tag {{item.profile.gender === 'female' ? 'badge cuIcon-female bg-pink' : ''}} {{item.profile.gender === 'male' ? 'badge cuIcon-male bg-blue' : ''}}"></view> -->
                             </view>
                         </view>
                         <view class="cu-list personal-desc">
@@ -121,8 +121,7 @@
                                 </view>
                                 <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
                                     <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false" wx:if="{{user.profile && user.profile.gender}}">
-                                        {{user.profile.gender === 'male' ? '男' : ''}}
-                                        {{user.profile.gender === 'female' ? '女' : ''}}
+                                        {{metaBook.gender[user.profile.gender]}}
                                     </view>
                                 </view>
                             </view>

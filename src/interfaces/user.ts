@@ -9,7 +9,7 @@ export interface User {
         nickName: string;
         nickNamePinyin?: string;
         realName?: string;
-        gender?: 'male' | 'female';
+        gender?: string;
         avatarUrl?: string;
         province?: string;
         country?: string;
@@ -47,3 +47,6 @@ export interface User {
     _counter?: { [k: string]: string };
     _lastActiveAt?: string;
 }
+
+
+export const Genders = { "types": ["男性", "女性", "多元性别", "不想透露"], "values": ["male", "female", "diversity", "unknown"] }

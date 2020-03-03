@@ -43,6 +43,10 @@ export class FellowPage extends CivilizedPage {
     @wxaViewProperty()
     user?: User;
 
+    @wxaViewProperty()
+    metaBook?: { [k: string]: any }
+
+
     constructor() {
         super();
 
@@ -63,6 +67,7 @@ export class FellowPage extends CivilizedPage {
         });
 
         this.setData({ backBtnEnabled: getCurrentPages()[0] !== this });
+        this.metaBook = gdt.metaBook
 
         gdt.userPromise.then((r) => {
             this.user = r;

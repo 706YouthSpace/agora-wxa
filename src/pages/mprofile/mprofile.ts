@@ -2,8 +2,7 @@ import _ from '../../vendors/lodash';
 import { CivilizedPage, WxaPage, wxaViewProperty, wxaViewMethod, wxaViewParam } from '../../services/wrapper';
 import { gdt } from '../../app';
 import wxService from '../../services/wx-service';
-
-
+import { Genders as predefinedGenders } from '../../interfaces/user'
 const PS_PLACEHOLDER = `讲讲您的个人经历如教育、工作、项目、看过的书，做过的事等。
 请分行陈列，例如：
 （1）2016年参加某夏令营，为乡村的孩子开设了音乐与舞蹈的夏令营课程。
@@ -33,6 +32,7 @@ const plMap: any = {
 };
 
 const predefinedTags = '学术，科技，人文，艺术，音乐，摄影，戏剧，公益，心理，电影，纪录片，美术'.split('，');
+
 
 // const LONG_TEXT_TPL = `（1）
 // （2）
@@ -65,6 +65,13 @@ export class ProfileModificationPage extends CivilizedPage {
     @wxaViewProperty()
     avaliableTags: string[] = _.clone(predefinedTags);
 
+    @wxaViewProperty()
+    genders: { [k: string]: string[] } = _.clone(predefinedGenders)
+
+    @wxaViewProperty()
+    genderIndex?: number;
+
+
     submitionLock: boolean = false;
 
     constructor() {
@@ -85,6 +92,7 @@ export class ProfileModificationPage extends CivilizedPage {
                     this.profile[k] = plMap[k];
                 }
             }
+            this.genderIndex = this.genders.values.indexOf(this.profile['gender'])
         }
     }
 
@@ -94,12 +102,11 @@ export class ProfileModificationPage extends CivilizedPage {
     }
 
     @wxaViewMethod()
-    toggleGender(@wxaViewParam('detail.value') val: boolean) {
-
+    bindPickerChange(@wxaViewParam('detail.value') val: number) {
         if (this.profile) {
-            this.profile.gender = val ? 'male' : 'female';
+            this.profile.gender = this.genders.values[val]
+            this.genderIndex = val
         }
-
     }
 
     @wxaViewMethod()
@@ -301,6 +308,7 @@ export class ProfileModificationPage extends CivilizedPage {
         this.submitionLock = true;
         const normalizedProfile = _.clone(this.profile || {});
         for (const k in plMap) {
+
             if (plMap.hasOwnProperty(k)) {
                 if (normalizedProfile[k] === plMap[k]) {
                     // tslint:disable-next-line: no-dynamic-delete
