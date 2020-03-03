@@ -1,0 +1,8 @@
+text {
+    word-break: keep-all;
+    word-wrap: break-word;
+}
+
+.flex .title {
+    min-width: calc(4em + 30rpx);
+}

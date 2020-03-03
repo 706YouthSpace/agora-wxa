@@ -1,0 +1,53 @@
+<view class="layout" hover-class="none" hover-stop-propagation="false" style="padding-top:{{CustomBar}}px">
+    <view class="header shadow-warp cu-custom" style="height:{{CustomBar}}px">
+        <view class="cu-bar fixed {{bgImage!=''?'none-bg text-white bg-img':''}} {{bgColor}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage+')':''}}">
+            <view class="action" bindtap="BackPage" wx:if="{{backBtnEnabled}}">
+                <text class="cuIcon-back"></text>
+                <slot name="header-left"></slot>
+            </view>
+
+            <view class="action" bindtap="BackPage" wx:if="{{alternativeMode}}">
+                <text class="cuIcon-back" wx:if="{{activeSection === '我的'}}" data-section="广场" bind:tap="sectionChange"></text>
+                <text class="cuIcon-my" wx:if="{{activeSection !== '我的'}}" data-section="我的" bind:tap="sectionChange"></text>
+            </view>
+            <view class="content" style="top:{{StatusBar}}px">
+                <slot name="header-title"></slot>
+            </view>
+            <slot name="header-right"></slot>
+        </view>
+    </view>
+    <view class="body" hover-class="none" hover-stop-propagation="false">
+        <slot name="body"></slot>
+    </view>
+    <view class="footer cu-bar" hover-class="none" hover-stop-propagation="false" wx:if="{{alternativeMode}}">
+        <view class="shadow xplus" data-section="发布" data-section-long="我的" bind:tap="sectionChange" bind:longpress="onlyButtonLongPress">
+            <button class="cu-btn cuIcon-add bg-green shadow"></button>
+        </view>
+    </view>
+    <view class="footer cu-bar tabbar bg-white shadow" wx:else>
+        <view class="action text-gray {{activeSection == '人物' ? 'active' : ''}}" data-section="人物" bindtap="sectionChange">
+            <view class="cuIcon-friend"></view>
+            人物
+        </view>
+        <view class="action text-gray {{activeSection == '广场' ? 'active' : ''}}" data-section="广场" bindtap="sectionChange">
+            <view class="cuIcon-discover"></view>
+            广场
+        </view>
+        <view class="action text-gray add-action {{activeSection == '发布' ? 'active' : ''}}" data-section="发布" bindtap="sectionChange">
+            <button class="cu-btn cuIcon-add bg-green shadow"></button>
+            发布
+        </view>
+        <view class="action text-gray" bindtap="gotoContact">
+            <view class="cuIcon-group">
+                <!-- <view class="cu-tag badge">...</view> -->
+            </view>
+            好友
+        </view>
+        <view class="action text-gray {{activeSection == '我的' ? 'active' : ''}}" data-section="我的" bindtap="sectionChange">
+            <view class="cuIcon-my">
+                <!-- <view class="cu-tag badge"></view> -->
+            </view>
+            我的
+        </view>
+    </view>
+</view>

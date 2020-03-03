@@ -1,0 +1,34 @@
+.cu-bar.input textarea {
+	overflow: initial;
+	line-height: 38rpx;
+	height: 38rpx;
+	min-height: 38rpx;
+	flex: 1;
+	font-size: 30rpx;
+	margin: 10rpx 0;
+}
+
+.cu-bar.input .pseudo-textarea {
+    overflow: hidden;
+    text-overflow: ellipsis;
+	line-height: 38rpx;
+	height: 38rpx;
+	min-height: 38rpx;
+	flex: 1;
+	font-size: 30rpx;
+	margin: 10rpx 0;
+}
+
+.cu-bar.input .action {
+	margin-right: 20rpx;
+	margin-left: 20rpx;
+}
+
+.action {
+    position: relative;
+}
+
+.container {
+    /* margin-bottom: calc(120rpx + env(safe-area-inset-bottom) + 24rpx); */
+    margin-bottom: 120rpx;
+}

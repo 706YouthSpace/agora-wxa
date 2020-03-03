@@ -1,0 +1,115 @@
+<custom-header back-btn-enabled="{{backBtnEnabled}}">
+    <view slot="header-left" class="" hover-class="none" hover-stop-propagation="false">返回</view>
+    <view slot="header-title" class="" hover-class="none" hover-stop-propagation="false">发布内容</view>
+</custom-header>
+<view class="container" hover-class="none" hover-stop-propagation="false">
+    <form action="">
+        <view class="cu-form-group margin-top">
+            <textarea value="{{textDraft}}" maxlength="400" placeholder="想要发布的内容..." bindblur="setToTextDraft" bindinput="setToTextDraft" ></textarea>
+        </view>
+        <view class="padding bg-white solid-bottom">
+            <view class="cu-tag round" wx:for="{{tagsDraft}}" wx:key="*this" data-tag-index="{{index}}" bindtap="editTag">
+                <input wx:if="{{currentEditingTagIndex === index}}" value="{{item}}" focus="{{currentEditingTagIndex === index}}" data-tag-index="{{index}}" bindblur="finishTagEdit" placeholder="定义标签"></input>
+                <view wx:else class="" selectable="false" space="false" decode="false">
+                    {{item}}
+                </view>
+            </view>
+            <view class="cu-tag round" bindtap="startTagCreate">
+                <input wx:if="{{draftingTag}}" focus="{{draftingTag}}" bindblur="finishTagCreate" placeholder="定义标签"></input>
+                
+                ...
+            </view>
+        </view>
+        <!-- <view class="cu-bar bg-white margin-top">
+            <view class="action">图片上传</view>
+            <view class="action">{{imgList.length}}/9</view>
+        </view> -->
+        <view class="cu-form-group margin-top bg-gray">
+            <view class="grid col-3 grid-square flex-sub">
+                <view class="bg-img" wx:for="{{imgDraft}}" wx:key="index" bindtap="ViewImage" data-url="{{imgDraft[index]}}">
+                    <image src='{{imgDraft[index]}}' mode='aspectFill'></image>
+                    <view class="cu-tag bg-red" catchtap="unselectImage" data-index="{{index}}">
+                        <text class="cuIcon-close"></text>
+                    </view>
+                </view>
+                <view class="solids" bindtap="chooseImages" wx:if="{{imgDraft.length < 9}}">
+                    <text class="cuIcon-cameraadd"></text>
+                </view>
+            </view>
+        </view>
+        <view class="padding flex flex-direction">
+            <button class="cu-btn bg-olive shadow lg" bindtap="submit">发布</button>
+        </view>
+    </form>
+    <view class="cu-modal {{activeModal=='templateSelect'?'show':''}}" bindtap="dismissModal">
+        <view class="cu-dialog">
+            <view class="cu-bar bg-white">
+                <view class="margin-0 flex-sub solid-left">选择发布内容种类</view>
+            </view>
+            <view class="cu-list menu text-center">
+                <view class="cu-item" data-template="话题讨论" bindtap="applyTemplate">
+                    <label class="flex justify-between align-center flex-sub">
+                        <view class="flex-sub">话题讨论</view>
+                    </label>
+                </view>
+                <view class="cu-item" data-template="公共活动" bindtap="applyTemplate">
+                    <label class="flex justify-between align-center flex-sub">
+                        <view class="flex-sub">公共活动</view>
+                    </label>
+                </view>
+                <view class="cu-item" data-template="私人求助信息" bindtap="applyTemplate">
+                    <label class="flex justify-between align-center flex-sub">
+                        <view class="flex-sub">私人求助信息</view>
+                    </label>
+                </view>
+                <!-- <view class="cu-item" bindtap="applyTemplate">
+                    <label class="flex justify-between align-center flex-sub">
+                        <view class="flex-sub">空模板</view>
+                    </label>
+                </view> -->
+            </view>
+        </view>
+    </view>
+    <view class="cu-modal {{activeModal=='tagEdit'?'show':''}}">
+        <view class="cu-dialog">
+            <view class="cu-bar bg-white justify-end">
+                <view class="content">标签管理</view>
+                <view class="action" bindtap="dismissModal">
+                    <text class="cuIcon-close text-red"></text>
+                </view>
+            </view>
+            <view class="padding-sm">
+                <view class="" hover-class="none" hover-stop-propagation="false">
+                    <view class="cu-bar bg-white justify-end">
+                        <view class="content text-left ">备选标签</view>
+                    </view>
+                    <view class="padding-xs bg-white solid-bottom text-left padding-left-lg">
+                        <view class="cu-tag round" wx:for="{{tagsDraft}}" wx:key="*this">
+                            {{item}}
+                        </view>
+                        <view class="cu-tag round">...</view>
+                    </view>
+                    <view class="cu-form-group">
+                        <input placeholder="输入标签"></input>
+                        <button class="cu-btn bg-green shadow">添加</button>
+                    </view>
+                </view>
+                <view class="" hover-class="none" hover-stop-propagation="false">
+                    <view class="padding bg-white solid-bottom" bindtap="showTagEdit">
+                        <view class="cu-tag round" wx:for="{{tagsDraft}}" wx:key="*this">
+                            {{item}}
+                        </view>
+                        <view class="cu-tag round">...</view>
+                    </view>
+                </view>
+            </view>
+            <view class="cu-bar bg-white justify-end">
+                <view class="action">
+                    <button class="cu-btn line-green text-green" bindtap="dismissModal">取消</button>
+                    <button class="cu-btn bg-green margin-left" bindtap="hideModal">确定</button>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<application-dialog control="{{dialogControl}}"></application-dialog>

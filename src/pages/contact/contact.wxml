@@ -1,0 +1,45 @@
+<custom-header back-btn-enabled="{{backBtnEnabled}}">
+    <view slot="header-left" class="" hover-class="none" hover-stop-propagation="false">返回</view>
+    <view slot="header-title" class="" hover-class="none" hover-stop-propagation="false">{{ user.profile.nickName || '我'}}的好友</view>
+</custom-header>
+<view class="cu-bar bg-white search">
+    <view class="search-form round">
+        <text class="cuIcon-search"></text>
+        <input type="text" placeholder="输入搜索的关键词" confirm-type="search"></input>
+    </view>
+    <view class="action">
+        <button class="cu-btn bg-gradual-green shadow-blur round">搜索</button>
+    </view>
+</view>
+<scroll-view scroll-y class="indexes" scroll-into-view="indexes-{{scrollToAnchor}}" style="height:calc(100vh - {{CustomBar}}px - 50px)" scroll-with-animation="true" enable-back-to-top="true">
+    <block wx:for="{{entities}}" wx:key="letter">
+        <view class="padding indexItem-{{item.letter}}" id="indexes-{{item.letter}}" data-index="{{item.letter}}">
+            {{item.letter}}
+        </view>
+        <view class="cu-list menu-avatar no-padding">
+            <view class="cu-item" wx:for="{{item.data}}" wx:key="_id" wx:for-item="contact" wx:for-index="sub" bind:tap="gotoFellow" data-uid="{{contact._id}}">
+                <view class="cu-avatar round lg">{{contact.profile.nickName[0]}}</view>
+                <view class="content">
+                    <view class="text-grey">{{contact.profile.nickName}}</view>
+                    <view class="text-gray text-sm">
+                        <view class="" hover-class="none" hover-stop-propagation="false" wx:if="{{contact.profile.organization || contact.profile.position}}">
+                            {{contact.profile.organization + ' '}}{{contact.profile.position}}
+                        </view>
+                        <view class="" hover-class="none" hover-stop-propagation="false" wx:elif="{{contact.profile.school || contact.profile.researchField}}">
+                            {{contact.profile.school + ' '}}{{contact.profile.researchField + '系'}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
+</scroll-view>
+<view class="indexBar" style="height:calc(100vh - {{CustomBar}}px - 50px)">
+    <view class="indexBar-box" bindtouchstart="moveCursorStart" bindtouchend="moveCursorStop" catchtouchmove="onMoveCursor">
+        <view class="indexBar-item" wx:for="{{aToz}}" wx:key="*this" id="{{index}}" bindtouchstart="moveCursorStartInner" bindtouchend="moveCursorStopInner">
+            {{aToz[index]}}
+        </view>
+    </view>
+</view>
+<!-- 选择显示 -->
+<view hidden="{{hidden}}" class="indexToast">{{letterCursor}}</view>

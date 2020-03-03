@@ -1,0 +1,200 @@
+<!-- index.wxml -->
+<basic-layout alternative-mode="{{!user.activated}}" active-section="{{activeSection}}" back-btn-enabled="{{false}}" bind:sectionChange="changeSection" bind:multiTap="multiTapped">
+    <view slot="header-left" class="" hover-class="none" hover-stop-propagation="false">返回</view>
+    <view slot="header-title" class="" hover-class="none" hover-stop-propagation="false">
+        {{activeSection}}
+    </view>
+    <view slot="body" class="container">
+        <view class="section-modal" hover-class="none" hover-stop-propagation="false">
+            <application-dialog active="{{dialogActive}}" kind="{{dialogKind}}"></application-dialog>
+        </view>
+        <view class="section-friends" wx:if="{{activeSection === '人物'}}">
+            <view class="cu-bar search bg-white">
+                <view class="search-form round">
+                    <text class="cuIcon-search"></text>
+                    <input type="text" value="{{searchKeywords}}" bindinput="setSearchKeywords" bindblur="setSearchKeywords" bindconfirm="searchForUsers" placeholder="姓名、昵称、关键词..." confirm-type="search"></input>
+                    <text wx:if="{{searchKeywords}}" class="cuIcon-roundclose text-bold text-gray padding-right-sm" bindtap="clearSearch"></text>
+                </view>
+                <view class="action">
+                    <button class="cu-btn bg-green shadow-blur round" bind:tap="searchForUsers">
+                        搜索
+                    </button>
+                </view>
+            </view>
+            <view class="grid col-2 text-center">
+                <view class="cu-card case" wx:for="{{mode === 'search' ? userSearchResults : users}}" wx:key="_id">
+                    <view class="cu-item shadow" data-uid="{{item._id}}" bindtap="gotoFellow">
+                        <view class="image">
+                            <image src="https://marketplace.canva.cn/MADGgHh5-kc/1/0/screen/canva-黑白炫光楼梯照片背景-MADGgHh5-kc.png" mode="aspectFill"></image>
+                            <view class="cu-tag bg-green image-tag" wx:if="{{item.profile.province || item.profile.city}}">
+                                {{item.profile.province}}{{item.profile.city}}
+                            </view>
+                            <view class="cu-bar bg-shadeBottom"></view>
+                            <view class="cu-avatar round xl shadow bg-black shadow-lg" style="background-image:url({{item.profile.avatarUrl}});">
+                                {{item.profile.avatarUrl ? '' : (item.profile.nickName[0] || item._id[0])}}
+                                <view wx:if="{{item.profile.gender || item.profile.gender === false}}" class="cu-tag {{item.profile.gender === 'female' ? 'badge cuIcon-female bg-pink' : ''}} {{item.profile.gender === 'male' ? 'badge cuIcon-male bg-blue' : ''}}"></view>
+                            </view>
+                        </view>
+                        <view class="cu-list personal-desc">
+                            <view class="cu-item bg-white">
+                                <view class="content">
+                                    <view class="name margin-xs {{item.activated ? 'text-grey' : 'text-red'}}">
+                                        {{item.profile.nickName}}
+                                    </view>
+                                    <view class="desc text-gray text-sm">
+                                        <view class="" hover-class="none" hover-stop-propagation="false" wx:if="{{item.profile.organization || item.profile.position}}">
+                                            {{(item.profile.organization || '') + ' '}}{{item.profile.position}}
+                                        </view>
+                                        <view class="" hover-class="none" hover-stop-propagation="false" wx:if="{{item.profile.school || item.profile.researchField}}">
+                                            {{(item.profile.school || '') + ' '}}{{(item.profile.researchField || '') + '系'}}
+                                        </view>
+                                    </view>
+                                    <view class="tags text-grey">
+                                        <view wx:for="{{item.profile.tags}}" wx:key="*this" class="margin-bottom-xs cu-tag bg-green light round">
+                                            {{item}}
+                                        </view>
+                                    </view>
+                                    <view class="counts text-gray text-sm">
+                                        <text class="cuIcon-attentionfill margin-lr-xs"></text>
+                                        {{item._counter.views || '0'}}
+                                        <text class="cuIcon-friendfill margin-lr-xs"></text>
+                                        {{item._counter.friends || '0'}}
+                                        <text class="cuIcon-messagefill margin-lr-xs"></text>
+                                        {{item._counter.posts || '0'}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="section-plaza" wx:if="{{activeSection === '广场'}}">
+            <view class="cu-bar search bg-white">
+                <view class="search-form round">
+                    <text class="cuIcon-search"></text>
+                    <input type="text" value="{{searchKeywords}}" bindinput="setSearchKeywords" bindblur="setSearchKeywords" bindconfirm="searchForPosts" placeholder="关键词..." confirm-type="search"></input>
+                    <text wx:if="{{searchKeywords}}" class="cuIcon-roundclose text-bold text-gray padding-right-sm" bindtap="clearSearch"></text>
+                </view>
+                <view class="action">
+                    <button class="cu-btn bg-green shadow-blur round" bind:tap="searchForPosts">
+                        搜索
+                    </button>
+                </view>
+            </view>
+            <post-item wx:for="{{mode === 'search' ? postSearchResults : posts}}" wx:key="_id" post="{{item}}" bind:like="markPostLiked" bind:unlike="markPostUnliked" bind:comment="gotoPost"></post-item>
+        </view>
+        <view class="section-create" wx:if="{{activeSection === '发布'}}"></view>
+        <view class="section-group" wx:if="{{activeSection === '圈子'}}"></view>
+        <view class="section-mine" wx:if="{{activeSection === '我的'}}">
+            <view class="cu-card" hover-class="none" hover-stop-propagation="false">
+                <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false" bindtap="gotoProfileEditing">
+                    <view class="cu-bar margin-left-lg" hover-class="none" hover-stop-propagation="false">
+                        <view class="text-lg" hover-class="none" hover-stop-propagation="false">
+                            详细信息
+                        </view>
+                    </view>
+                    <view class="flex" wx:if="{{wxUserInfo}}">
+                        <view class="flex-sub radius padding-sm">
+                            <view class="cu-avatar xl round margin-left" style="background-image:url({{user.profile.avatarUrl}});">
+                                {{user.profile.avatarUrl ? '' : (user.profile.nickName[0] || uid[0])}}
+                            </view>
+                        </view>
+                        <view class="flex-treble padding-sm margin-xs radius">
+                            <view class="flex personal-general-desc" hover-class="none" hover-stop-propagation="false">
+                                <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                        昵称:
+                                    </view>
+                                </view>
+                                <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                        {{user.profile.nickName || uid}}
+                                    </view>
+                                </view>
+                            </view>
+                            <view class="flex personal-general-desc" hover-class="none" hover-stop-propagation="false">
+                                <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                        性别:
+                                    </view>
+                                </view>
+                                <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false" wx:if="{{user.profile && user.profile.gender}}">
+                                        {{user.profile.gender === 'male' ? '男' : ''}}
+                                        {{user.profile.gender === 'female' ? '女' : ''}}
+                                    </view>
+                                </view>
+                            </view>
+                            <view class="flex personal-general-desc" hover-class="none" hover-stop-propagation="false">
+                                <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                        家乡:
+                                    </view>
+                                </view>
+                                <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                        {{user.profile.province}} {{user.profile.city}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                    <view wx:else class="flex solid-bottom padding padding-bottom-xl justify-center" hover-class="none" hover-stop-propagation="false">
+                        <button class="cu-btn bg-grey shadow text-right" open-type="getUserInfo" catch:tap="noop" lang="zh_CN" bindgetuserinfo="gotUserInfo">
+                            点击登录
+                        </button>
+                    </view>
+                </view>
+            </view>
+            <view class="cu-card" hover-class="none" hover-stop-propagation="false" wx:if="{{user.activated && myFriends.length}}" bind:tap="gotoContact">
+                <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+                    <view class="cu-bar margin-left-lg" hover-class="none" hover-stop-propagation="false">
+                        <view class="text-lg" hover-class="none" hover-stop-propagation="false">
+                            好友
+                        </view>
+                    </view>
+                    <view class="cu-avatar-group margin">
+                        <view class="cu-avatar round lg" wx:for="{{myFriends}}" wx:if="{{index <= 9}}" wx:key="_id" style="background-image:url({{item.profile.avatarUrl}});">
+                            {{item.profile.avatarUrl ? '' : (item.profile.nickName[0] || item._id[0])}}
+                        </view>
+                    </view>
+                    <button class="cu-btn bg-grey shadow text-right" bindtap="gotoContact">
+                        更多
+                    </button>
+                </view>
+            </view>
+            <view class="cu-card" hover-class="none" hover-stop-propagation="false">
+                <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+                    <view class="cu-bar margin-left-lg" hover-class="none" hover-stop-propagation="false">
+                        <view class="text-lg" hover-class="none" hover-stop-propagation="false">
+                            帖子
+                        </view>
+                    </view>
+                    <scroll-view scroll-x class="bg-grey nav text-center">
+                        <view class="cu-item {{postDisplayTabSelection === 'authored' ? 'text-bold':''}}" bindtap="postDisplayTabSelect" data-tab="authored">
+                            <text class="cuIcon-write{{postDisplayTabSelection === 'authored' ? 'fill':''}}"></text>
+                            我发布的
+                        </view>
+                        <view class="cu-item {{postDisplayTabSelection === 'liked' ? 'text-bold':''}}" bindtap="postDisplayTabSelect" data-tab="liked">
+                            <text class="cuIcon-like{{postDisplayTabSelection === 'liked' ? 'fill':''}}"></text>
+                            我点赞的
+                        </view>
+                        <view class="cu-item {{postDisplayTabSelection === 'commented' ?'text-bold':''}}" bindtap="postDisplayTabSelect" data-tab="commented">
+                            <text class="cuIcon-comment{{postDisplayTabSelection === 'commented' ?'fill':''}}"></text>
+                            我评论的
+                        </view>
+                    </scroll-view>
+                    <view wx:if="{{(postDisplayTabSelection === 'authored' && !userAuthoredPosts.length) || (postDisplayTabSelection === 'liked' && !userLikedPosts.length) || (postDisplayTabSelection === 'commented' && !userCommentedPosts.length)}}" class="cu-bar text-center text-lg text-gray" hover-class="none" hover-stop-propagation="false">
+                        <text style="width: 100%;min-height: 4rem;" selectable="false" space="false" decode="false">
+                            (暂无)
+                        </text>
+                    </view>
+                    <post-item wx:if="{{postDisplayTabSelection === 'authored'}}" wx:for="{{userAuthoredPosts}}" wx:key="_id" post="{{item}}" bind:like="gotoPost" bind:unlike="gotoPost" bind:comment="gotoPost"></post-item>
+                    <post-item wx:if="{{postDisplayTabSelection === 'liked'}}" wx:for="{{userLikedPosts}}" wx:key="_id" post="{{item}}" bind:like="gotoPost" bind:unlike="gotoPost" bind:comment="gotoPost"></post-item>
+                    <post-item wx:if="{{postDisplayTabSelection === 'commented'}}" wx:for="{{userCommentedPosts}}" wx:key="_id" post="{{item}}" bind:like="gotoPost" bind:unlike="gotoPost" bind:comment="gotoPost"></post-item>
+                </view>
+            </view>
+        </view>
+    </view>
+</basic-layout>

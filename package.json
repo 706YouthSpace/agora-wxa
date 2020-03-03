@@ -1,0 +1,39 @@
+{
+  "name": "demo",
+  "version": "1.0.1",
+  "scripts": {
+    "compile": "gulp build",
+    "build": "gulp build",
+    "fastbuild": "gulp build",
+    "watch": "gulp watch",
+    "clean": "gulp clean"
+  },
+  "devDependencies": {
+    "@types/events": "^3.0.0",
+    "@types/lodash": "^4.14.137",
+    "@types/node": "^12.7.2",
+    "del": "^5.0.0",
+    "dependency-tree": "^7.0.2",
+    "gulp": "^4.0.2",
+    "gulp-changed": "^4.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-stylus": "^2.7.0",
+    "gulp-typescript": "^5.0.1",
+    "gulp-wxa-copy-npm": "^0.1.4",
+    "match-requires": "^2.0.1",
+    "read-pkg-up": "^6.0.0",
+    "stylus": "^0.54.7",
+    "through2": "^3.0.1",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.2",
+    "weui-wxss": "^2.0.0"
+  },
+  "dependencies": {
+    "events": "^3.0.0",
+    "reflect-metadata": "^0.1.13",
+    "tslib": "^1.10.0"
+  }
+}

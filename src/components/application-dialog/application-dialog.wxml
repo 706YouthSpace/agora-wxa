@@ -1,0 +1,18 @@
+<view class="cu-modal {{show ? 'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content">{{title}}</view>
+            <view class="action" bindtap="dismissModal">
+                <text class="cuIcon-close text-gray"></text>
+            </view>
+        </view>
+        <view class="padding-xl padding-bottom-xl text-left">
+            <text class="" selectable="false" space="true" decode="true">{{content}}</text>
+        </view>
+        <view class="bg-white action padding-tb-sm">
+            <view wx:for="{{actions}}" wx:key="*this" data-action="{{item}}" class="cu-btn round lg bg-{{actionColorMap[item] || 'green'}} shadow margin-lr-lg" bindtap="customModalAction">
+                {{actionTextMap[item] || item}}
+            </view>
+        </view>
+    </view>
+</view>

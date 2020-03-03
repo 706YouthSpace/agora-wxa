@@ -1,0 +1,70 @@
+.section-friends .menu-avatar {
+    overflow: visible;
+}
+
+.section-friends .cu-card>.cu-item .image {
+    height: 200rpx;
+}
+
+.section-friends .cu-card>.cu-item .image .cu-tag.image-tag {
+	/* position: absolute; */
+    right: unset;
+    left: 0;
+}
+
+.section-friends .cu-card>.cu-item .cu-avatar {
+    position: absolute;
+    left: calc(50% - 64rpx);
+    top: calc(200rpx/2 - 64rpx);
+    
+}
+
+.personal-desc>.cu-item {
+    min-height: 200rpx;
+    padding: 2rpx;
+    line-height: 1.2rem;
+}
+
+.personal-desc .desc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    margin: 0 15rpx 15rpx 15rpx;
+}
+
+.personal-desc .cu-tag:nth-child(1) {
+    margin-left: 10rpx;
+}
+
+.personal-desc .content {
+    padding-bottom: 1.2rem;
+}
+
+.personal-desc .counts {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+}
+
+
+.section-friends .cu-card:nth-child(odd)>.cu-item {
+    margin-right: 15rpx;
+    margin-bottom: 10rpx;
+}
+
+.section-friends .cu-card:nth-child(even)>.cu-item {
+    margin-left: 15rpx;
+    margin-bottom: 10rpx;
+}
+
+.personal-general-desc {
+    vertical-align: center;
+}
+
+text{
+    word-break: keep-all;
+    word-wrap: break-word;
+}    

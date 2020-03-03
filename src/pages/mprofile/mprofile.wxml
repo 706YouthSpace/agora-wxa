@@ -1,0 +1,202 @@
+<custom-header back-btn-enabled="{{backBtnEnabled}}">
+    <view slot="header-left" class="" hover-class="none" hover-stop-propagation="false">返回</view>
+    <view slot="header-title" class="" hover-class="none" hover-stop-propagation="false">
+        修改个人资料
+    </view>
+</custom-header>
+<form>
+    <view class="cu-form-group margin-top">
+        <view class="title">头像</view>
+        <view wx:if="{{profile.avatarUrl}}" class="margin-sm cu-avatar lg radius bg-gray" style="background-image:url({{profile.avatarUrl}});">
+            <button class="overlay-button" bindgetuserinfo="syncAvatar" open-type="getUserInfo"></button>
+        </view>
+        <view wx:else class="margin-sm cu-avatar lg radius bg-gray" style="background-image:url({{profile.avatarUrl}});">
+            <button class="overlay-button" bindgetuserinfo="syncAvatar" open-type="getUserInfo"></button>
+        </view>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">昵称</view>
+        <input placeholder="修改昵称" value="{{profile.nickName}}" data-pl="nickName" bindblur="setProfileField"></input>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">性别</view>
+        <view id="gender-switch" hover-class="none" hover-stop-propagation="false">
+            <switch class="switch-sex" checked="{{profile.gender === 'male'}}" bindchange="toggleGender"></switch>
+        </view>
+    </view>
+    <view class="cu-form-group" wx:if="{{!profile.country || profile.country === '中国' || profile.country === 'China'}}">
+        <view class="title">家乡</view>
+        <picker id="region-switch" mode="region" bindchange="onRegionChange" bindcancel="onRegionCancle">
+            <view class="picker">{{region[0]}} {{region[1]}}</view>
+        </picker>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">个人标签</view>
+        <view class="tag-container" hover-class="none" hover-stop-propagation="false" bindtap="tagEdit">
+            <view class="cu-tag radius bg-green margin-xs" wx:if="{{profile.tags && profile.tags.length}}" wx:for="{{profile.tags}}" wx:key="*this">
+                {{item}}
+            </view>
+            <view class="cu-tag radius bg-green margin-xs">...</view>
+        </view>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">微信号</view>
+        <input placeholder="披露微信号" value="{{profile.wxId}}" data-pl="wxId" bindblur="setProfileField"></input>
+        <view class="cu-capsule radius" data-pl="wxId" bindtap="toogleProfileVisibility">
+            <view class="cu-tag bg-blue" wx:if="{{preferences.wxId === 'contact'}}">仅好友</view>
+            <view class="cu-tag bg-blue" wx:elif="{{preferences.wxId === 'private'}}">私密</view>
+            <view class="cu-tag bg-blue" wx:else>公开</view>
+        </view>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">手机号</view>
+        <input placeholder="披露手机号" value="{{profile.cellphone}}" data-pl="cellphone" bindblur="setProfileField"></input>
+        <view class="cu-capsule radius" data-pl="cellphone" bindtap="toogleProfileVisibility">
+            <view class="cu-tag bg-blue" wx:if="{{preferences.cellphone === 'public'}}">公开</view>
+            <view class="cu-tag bg-blue" wx:elif="{{preferences.cellphone === 'contact'}}">
+                仅好友
+            </view>
+            <view class="cu-tag bg-blue" wx:else>私密</view>
+        </view>
+    </view>
+    <!-- <view class="cu-form-group">
+        <view class="title">手机号码</view>
+        <input placeholder="修改手机号码" value="{{profile.cellphone}}" disabled="true" data-pl="cellphone" bindblur="setProfileField"></input>
+        <view class="cu-capsule radius" data-pl="cellphone" bindtap="toogleProfileVisibility">
+            <view class="cu-tag bg-blue" wx:if="{{preferences.cellphone === 'public'}}">公开</view>
+            <view class="cu-tag bg-blue" wx:elif="{{preferences.cellphone === 'contact'}}">
+                仅好友
+            </view>
+            <view class="cu-tag bg-blue" wx:else>私密</view>
+        </view>
+    </view>
+    <view class="cu-form-group" wx:if="{{profile.cellphone !== userInfo.cellphone}}">
+        <view class="title">验证码</view>
+        <input placeholder="输入框带个按钮"></input>
+        <button class="cu-btn bg-green shadow">验证码</button>
+    </view> -->
+    <view class="cu-form-group">
+        <view class="title">毕业院校</view>
+        <input placeholder="清华大学" value="{{profile.school}}" data-pl="school" bindblur="setProfileField"></input>
+        <view class="cu-capsule radius" data-pl="school" bindtap="toogleProfileVisibility">
+            <view class="cu-tag bg-blue" wx:if="{{preferences.school === 'contact'}}">仅好友</view>
+            <view class="cu-tag bg-blue" wx:elif="{{preferences.school === 'private'}}">私密</view>
+            <view class="cu-tag bg-blue" wx:else>公开</view>
+        </view>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">专业领域</view>
+        <input placeholder="电气工程" value="{{profile.researchField}}" data-pl="researchField" bindblur="setProfileField"></input>
+        <view class="cu-capsule radius" data-pl="researchField" bindtap="toogleProfileVisibility">
+            <view class="cu-tag bg-blue" wx:if="{{preferences.researchField === 'contact'}}">
+                仅好友
+            </view>
+            <view class="cu-tag bg-blue" wx:elif="{{preferences.researchField === 'private'}}">
+                私密
+            </view>
+            <view class="cu-tag bg-blue" wx:else>公开</view>
+        </view>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">任职组织</view>
+        <input placeholder="北京动物园" value="{{profile.organization}}" data-pl="organization" bindblur="setProfileField"></input>
+        <view class="cu-capsule radius" data-pl="organization" bindtap="toogleProfileVisibility">
+            <view class="cu-tag bg-blue" wx:if="{{preferences.organization === 'contact'}}">
+                仅好友
+            </view>
+            <view class="cu-tag bg-blue" wx:elif="{{preferences.organization === 'private'}}">
+                私密
+            </view>
+            <view class="cu-tag bg-blue" wx:else>公开</view>
+        </view>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">职位职务</view>
+        <input placeholder="饲养员" value="{{profile.position}}" data-pl="position" bindblur="setProfileField"></input>
+        <view class="cu-capsule radius" data-pl="position" bindtap="toogleProfileVisibility">
+            <view class="cu-tag bg-blue" wx:if="{{preferences.position === 'contact'}}">仅好友</view>
+            <view class="cu-tag bg-blue" wx:elif="{{preferences.position === 'private'}}">私密</view>
+            <view class="cu-tag bg-blue" wx:else>公开</view>
+        </view>
+    </view>
+    <view class="cu-form-group align-start">
+        <view class="cu-capsule radius pos-relative" data-pl="brefExperience">
+            <view class="cu-tag bg-gray title-label" wx:if="{{preferences.brefExperience === 'contact'}}">
+                仅好友
+            </view>
+            <view class="cu-tag bg-gray title-label" wx:elif="{{preferences.brefExperience === 'private'}}">
+                私密
+            </view>
+            <view class="cu-tag bg-gray title-label" wx:else>公开</view>
+        </view>
+        <view class="title">个人经历</view>
+        <textarea class="long-text" data-pl="brefExperience" maxlength="400" bindinput="injectBrackets" value="{{profile.brefExperience}}" bindblur="toggleFakePlaceholder" bindfocus="toggleFakePlaceholder"></textarea>
+    </view>
+    <view class="cu-form-group align-start">
+        <view class="cu-capsule radius pos-relative" data-pl="brefSkills">
+            <view class="cu-tag bg-gray title-label" wx:if="{{preferences.brefSkills === 'contact'}}">
+                仅好友
+            </view>
+            <view class="cu-tag bg-gray title-label" wx:elif="{{preferences.brefSkills === 'private'}}">
+                私密
+            </view>
+            <view class="cu-tag bg-gray title-label" wx:else>公开</view>
+        </view>
+        <view class="title">知识技能</view>
+        <textarea class="long-text" data-pl="brefSkills" maxlength="400" bindinput="injectBrackets" value="{{profile.brefSkills}}" bindblur="toggleFakePlaceholder" bindfocus="toggleFakePlaceholder"></textarea>
+    </view>
+    <view class="cu-form-group align-start">
+        <view class="cu-capsule radius pos-relative" data-pl="brefConcerns">
+            <view class="cu-tag bg-gray title-label" wx:if="{{preferences.brefConcerns === 'contact'}}">
+                仅好友
+            </view>
+            <view class="cu-tag bg-gray title-label" wx:elif="{{preferences.brefConcerns === 'private'}}">
+                私密
+            </view>
+            <view class="cu-tag bg-gray title-label" wx:else>公开</view>
+        </view>
+        <view class="title">想做的事</view>
+        <textarea class="long-text" data-pl="brefConcerns" maxlength="400" bindinput="injectBrackets" value="{{profile.brefConcerns}}" bindblur="toggleFakePlaceholder" bindfocus="toggleFakePlaceholder"></textarea>
+    </view>
+    <view class="cu-form-group align-start">
+        <view class="cu-capsule radius pos-relative" data-pl="brefOthers">
+            <view class="cu-tag bg-gray title-label" wx:if="{{preferences.brefOthers === 'contact'}}">
+                仅好友
+            </view>
+            <view class="cu-tag bg-gray title-label" wx:elif="{{preferences.brefOthers === 'private'}}">
+                私密
+            </view>
+            <view class="cu-tag bg-gray title-label" wx:else>公开</view>
+        </view>
+        <view class="title">其他说明</view>
+        <textarea class="long-text" data-pl="brefOthers" placeholder="其他想介绍给大家的" maxlength="400" bindinput="injectBrackets" value="{{profile.brefOthers}}" bindblur="toggleFakePlaceholder" bindfocus="toggleFakePlaceholder"></textarea>
+    </view>
+    <view class="padding flex flex-direction">
+        <button class="cu-btn bg-olive shadow lg" bindtap="save">保存</button>
+    </view>
+</form>
+<view hover-class="none" hover-stop-propagation="false">
+    <view class="cu-modal {{modal==='tagEdit'?'show':''}}">
+        <view class="cu-dialog">
+            <view class="cu-bar bg-white justify-end">
+                <view class="content">编辑标签</view>
+                <!-- <view class="action" bindtap="hideModal">
+                    <text class="cuIcon-close text-red"></text>
+                </view> -->
+            </view>
+            <view class="padding-xl">
+                <view class="cu-tag radius bg-green margin-top-xs shadow" wx:if="{{profile.tags && profile.tags.length}}" wx:for="{{profile.tags}}" wx:key="*this" data-tag="{{item}}" bindtap="removeTag">
+                    {{item}}
+                </view>
+            </view>
+            <view class="padding-xl">
+                <view class="cu-tag radius bg-gray margin-top-xs" wx:for="{{avaliableTags}}" wx:key="*this" data-tag="{{item}}" bindtap="addTag">
+                    {{item}}
+                </view>
+            </view>
+            <view class="action padding-xl">
+                <button class="cu-btn round bg-blue shadow" bindtap="hideModal">完成</button>
+            </view>
+        </view>
+    </view>
+</view>

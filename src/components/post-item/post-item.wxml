@@ -1,0 +1,94 @@
+<view class="cu-card dynamic">
+    <view class="cu-item shadow">
+        <view class="cu-list menu-avatar" data-uid="{{post.author._id}}" bindtap="onAuthorTapped" data-target="{{post}}" bind:longpress="showAdmin">
+            <view class="cu-item">
+                <view class="cu-avatar round lg" style="background-image:url({{post.author.profile.avatarUrl}});">
+                    {{post.author.profile.avatarUrl ? '' : (item.author.profile.nickName[0] || item.author._id[0])}}
+                </view>
+                <view class="content flex-sub text-grey">
+                    <view>{{post.author.profile.nickName || item.author._id}}</view>
+                    <view class="text-gray text-sm flex justify-between">{{post._createdAt}}</view>
+                </view>
+                <view class="cu-tag bg-red fr margin-right-lg" wx:if="{{post.blocked}}">已隐藏</view>
+            </view>
+        </view>
+        <view class="text-content" wx:if="{{post.content}}" bindtap="onDetailTapped" data-target="{{post}}" bind:longpress="showAdmin">
+            <text selectable="true" space="false" decode="false" style="{{post.blocked ? 'text-decoration: line-through;' : ''}}">
+                {{post.content}}
+            </text>
+        </view>
+        <view wx:if="{{post.images.length}}" class="grid flex-sub padding-lr {{post.images.length > 1 ?'col-3 grid-square':'col-1'}}" data-target="{{post}}" bind:longpress="showAdmin">
+            <view class="bg-img {{post.images.length === 1 ? 'only-img':''}}" wx:for="{{post.images}}" wx:for-item="url" wx:key="*this" style="background-image:url({{url}});" data-url="{{url}}" data-urls="{{post.images}}" bindtap="previewImage"></view>
+        </view>
+        <view class="text-gray text-sm text-right padding">
+            <!-- <text class="cuIcon-attentionfill margin-lr-xs"></text>
+        10 -->
+            <text wx:if="{{post.liked}}" class="cuIcon-appreciatefill margin-lr-xs text-red" data-post-id="{{post._id}}" bindtap="onUnlikeTapped"></text>
+            <text wx:else class="cuIcon-appreciatefill margin-lr-xs text-gray" data-post-id="{{post._id}}" bindtap="onLikeTapped"></text>
+            {{post.counter.likes || ''}}
+            <text class="cuIcon-messagefill margin-lr-xs" data-post-id="{{post._id}}" bindtap="onCommentTapped"></text>
+            {{post.counter.comments || ''}}
+        </view>
+        <view class="cu-list menu-avatar comment" wx:if="{{isDetail && post.comments.length}}">
+            <view class="cu-item solid-top" wx:for="{{post.comments}}" wx:key="_id" wx:for-item="comment">
+                <view class="cu-avatar round" style="background-image:url({{comment.author.profile.avatarUrl}});" data-uid="{{comment.author._id}}" bindtap="onAuthorTapped"></view>
+                <view class="content" data-target="{{comment}}" bind:longpress="showAdmin">
+                    <view class="flex-sub text-grey text-sm">
+                        {{comment.author.profile.nickName || comment.author._id}}
+                    </view>
+                    <view class="flex-sub text-gray text-sm" wx:if="{{comment.reference}}">
+                        回复 {{comment.reference.author.profile.nickName}}:
+                    </view>
+                    <view class="cu-tag bg-red fr" wx:if="{{comment.blocked}}">已隐藏</view>
+                    <view class="text-content text-df">
+                        <text selectable="true" space="false" decode="false" style="{{comment.blocked ? 'text-decoration: line-through;' : ''}}">
+                            {{comment.content}}
+                        </text>
+                    </view>
+                    <view class="bg-grey padding-sm radius margin-top-sm  text-sm" wx:if="{{comment.images.length}}">
+                        <view wx:if="{{comment.images.length}}" class="grid flex-sub padding-lr {{comment.images.length > 1 ?'col-3 grid-square':'col-1'}}">
+                            <view class="bg-img {{comment.images.length === 1 ? 'only-img':''}}" wx:for="{{comment.images}}" wx:for-item="url" wx:key="*this" style="background-image:url({{url}});" data-url="{{url}}" data-urls="{{comment.images}}" bindtap="previewImage"></view>
+                        </view>
+                    </view>
+                    <view class="margin-top-sm justify-between flex">
+                        <view class="flex-sub text-gray text-sm flex justify-between">
+                            {{comment._createdAt}}
+                        </view>
+                        <view class="flex-sub text-right text-gray">
+                            <text wx:if="{{comment.liked}}" class="cuIcon-appreciatefill text-red" data-post-id="{{comment._id}}" bindtap="onUnlikeTapped"></text>
+                            <text wx:else class="cuIcon-appreciatefill text-gray" data-post-id="{{comment._id}}" bindtap="onLikeTapped"></text>
+                            {{comment.counter.likes || ''}}
+                            <text class="cuIcon-messagefill text-gray margin-left-sm" data-post-id="{{comment._id}}" bindtap="onCommentTapped"></text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<view wx:if="{{user.privileged}}" class="cu-modal {{showAdminOptions ? 'show':''}}" bindtap="dismissAdmin">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white">
+            <view class="margin-0 flex-sub solid-left">
+                管理{{adminTarget.inReplyToPost ? '评论': '帖子'}}："{{adminTargetBref}}"...
+            </view>
+        </view>
+        <view class="cu-list menu text-center">
+            <view class="cu-item" bind:tap="blockPost">
+                <label class="flex justify-between align-center flex-sub">
+                    <view class="flex-sub">隐藏</view>
+                </label>
+            </view>
+            <view class="cu-item" bind:tap="unblockPost">
+                <label class="flex justify-between align-center flex-sub">
+                    <view class="flex-sub">解除隐藏</view>
+                </label>
+            </view>
+            <!-- <view class="cu-item" bindtap="applyTemplate">
+                    <label class="flex justify-between align-center flex-sub">
+                        <view class="flex-sub">空模板</view>
+                    </label>
+                </view> -->
+        </view>
+    </view>
+</view>

@@ -1,0 +1,15 @@
+<view class="header shadow-warp cu-custom" style="height:{{CustomBar}}px">
+    <view class="cu-bar fixed {{bgImage!=''?'none-bg text-white bg-img':''}} {{bgColor}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage+')':''}}">
+        <view class="action" bindtap="goBack" wx:if="{{backBtnEnabled}}">
+            <text class="cuIcon-back"></text>
+            <slot name="header-left"></slot>
+        </view>
+        <view class="action border-custom" wx:else style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
+                <text class="cuIcon-homefill" bindtap="goHome"></text>
+            </view>
+        <view class="content" style="top:{{StatusBar}}px">
+            <slot name="header-title"></slot>
+        </view>
+        <slot name="header-right"></slot>
+    </view>
+</view>

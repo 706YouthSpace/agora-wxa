@@ -1,0 +1,9 @@
+
+.cu-card>.cu-item {
+    margin-top: 15rpx;
+    margin-bottom: 15rpx;
+}
+
+.cu-card.dynamic>.cu-item>.text-content {
+    max-height: none;
+}

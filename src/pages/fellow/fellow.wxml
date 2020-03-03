@@ -1,0 +1,257 @@
+<custom-header back-btn-enabled="{{backBtnEnabled}}">
+    <view slot="header-left" class="" hover-class="none" hover-stop-propagation="false">返回</view>
+    <view slot="header-title" class="" hover-class="none" hover-stop-propagation="false">会员资料</view>
+</custom-header>
+<view class="container" hover-class="none" hover-stop-propagation="false">
+    <view class="cu-card" hover-class="none" hover-stop-propagation="false">
+        <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+            <view class="flex">
+                <view class="flex-sub radius padding-sm">
+                    <view class="cu-avatar xl round margin-left" style="background-image:url({{fellowInfo.avatarUrl}});">
+                        {{fellowInfo.avatarUrl ? '' : (fellowInfo.nickName[0] || fellowUser._id[0])}}
+                    </view>
+                </view>
+                <view class="flex-treble padding-sm margin-xs radius">
+                    <view class="flex" hover-class="none" hover-stop-propagation="false">
+                        <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                            <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                昵称:
+                            </view>
+                        </view>
+                        <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                            <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                {{fellowInfo.nickName || fellowUser._id}}
+                            </view>
+                        </view>
+                    </view>
+                    <view class="flex" hover-class="none" hover-stop-propagation="false">
+                        <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                            <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                性别:
+                            </view>
+                        </view>
+                        <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                            <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                {{fellowInfo.gender === 'male' ? '男' : ''}}
+                                {{fellowInfo.gender === 'female' ? '女' : ''}}
+                            </view>
+                        </view>
+                    </view>
+                    <view class="flex" hover-class="none" hover-stop-propagation="false">
+                        <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                            <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                家乡:
+                            </view>
+                        </view>
+                        <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                            <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                {{fellowInfo.province}} {{fellowInfo.city}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="flex margin-lr margin-bottom-sm flex-wrap" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.tags && fellowInfo.tags.length}}">
+                <view class="cu-tag radius bg-olive margin-xs" wx:for="{{fellowInfo.tags}}" wx:key="*this">
+                    {{item}}
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="padding-lr flex flex-direction">
+        <button wx:if="{{user.privileged && !fellowUser.activated}}" class="cu-btn bg-green margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="activate">
+            管理： 激活用户
+        </button>
+        <button wx:if="{{user.privileged && fellowUser.activated}}" class="cu-btn bg-red margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="deactivate">
+            管理： 停用用户
+        </button>
+        <button wx:if="{{user.activated && !fellowUser.friendship.isFriendOfMine}}" class="cu-btn bg-green margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="friend">
+            加为好友
+        </button>
+    </view>
+    <view class="cu-card" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.wxId || fellowInfo.cellphone}}">
+        <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+            <view class="flex-treble padding-sm margin-xs radius cu-list menu">
+                <view class="flex margin-sm cu-item" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.wxId}}" data-copy="{{fellowInfo.wxId}}" bind:tap="copyToClipBoard">
+                    <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                        <view class="title text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                            微信号:
+                        </view>
+                    </view>
+                    <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                        <view class="text-md text-gray text-center" hover-class="none" hover-stop-propagation="false">
+                            {{fellowInfo.wxId}}
+                        </view>
+                    </view>
+                </view>
+                <view class="flex margin-sm cu-item" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.cellphone}}" data-copy="{{fellowInfo.cellphone}}" bind:tap="copyToClipBoard">
+                    <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                        <view class="title text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                            手机号:
+                        </view>
+                    </view>
+                    <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                        <view class="text-md text-gray text-center" hover-class="none" hover-stop-propagation="false">
+                            {{fellowInfo.cellphone}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="cu-card" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.school || fellowInfo.researchField || fellowInfo.organization || fellowInfo.position}}">
+        <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+            <view class="flex-treble padding-sm margin-xs radius cu-list menu">
+                <view class="flex margin-sm cu-item" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.school}}">
+                    <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                        <view class="title text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                            毕业院校:
+                        </view>
+                    </view>
+                    <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                        <view class="text-md text-gray text-center" hover-class="none" hover-stop-propagation="false">
+                            {{fellowInfo.school}}
+                        </view>
+                    </view>
+                </view>
+                <view class="flex margin-sm cu-item" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.researchField}}">
+                    <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                        <view class="title text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                            专业领域:
+                        </view>
+                    </view>
+                    <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                        <view class="text-md text-gray text-center" hover-class="none" hover-stop-propagation="false">
+                            {{fellowInfo.researchField}}
+                        </view>
+                    </view>
+                </view>
+                <view class="flex margin-sm cu-item" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.organization}}">
+                    <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                        <view class="title text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                            任职组织:
+                        </view>
+                    </view>
+                    <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                        <view class="text-md text-gray text-center" hover-class="none" hover-stop-propagation="false">
+                            {{fellowInfo.organization}}
+                        </view>
+                    </view>
+                </view>
+                <view class="flex margin-sm cu-item" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.position}}">
+                    <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
+                        <view class="title text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                            职位职务:
+                        </view>
+                    </view>
+                    <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
+                        <view class="text-md text-gray text-center" hover-class="none" hover-stop-propagation="false">
+                            {{fellowInfo.position}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="cu-card" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.brefExperience}}">
+        <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+            <view class="cu-bar margin-left-lg" hover-class="none" hover-stop-propagation="false">
+                <view class="text-lg" hover-class="none" hover-stop-propagation="false">个人经历</view>
+            </view>
+            <view class="padding-lr-xl padding-bottom-lg text-left" hover-class="none" hover-stop-propagation="false">
+                <text class="text-lg text-gray" hover-class="none" hover-stop-propagation="false">
+                    {{fellowInfo.brefExperience}}
+                </text>
+            </view>
+        </view>
+    </view>
+    <view class="cu-card" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.brefSkills}}">
+        <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+            <view class="cu-bar margin-left-lg" hover-class="none" hover-stop-propagation="false">
+                <view class="text-lg" hover-class="none" hover-stop-propagation="false">知识技能</view>
+            </view>
+            <view class="padding-lr-xl padding-bottom-lg text-left" hover-class="none" hover-stop-propagation="false">
+                <text class="text-lg text-gray" hover-class="none" hover-stop-propagation="false">
+                    {{fellowInfo.brefSkills}}
+                </text>
+            </view>
+        </view>
+    </view>
+    <view class="cu-card" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.brefConcerns}}">
+        <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+            <view class="cu-bar margin-left-lg" hover-class="none" hover-stop-propagation="false">
+                <view class="text-lg" hover-class="none" hover-stop-propagation="false">想做的事</view>
+            </view>
+            <view class="padding-lr-xl padding-bottom-lg text-left" hover-class="none" hover-stop-propagation="false">
+                <text class="text-lg text-gray" hover-class="none" hover-stop-propagation="false">
+                    {{fellowInfo.brefConcerns}}
+                </text>
+            </view>
+        </view>
+    </view>
+    <view class="cu-card" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowInfo.brefOthers}}">
+        <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+            <view class="cu-bar margin-left-lg" hover-class="none" hover-stop-propagation="false">
+                <view class="text-lg" hover-class="none" hover-stop-propagation="false">其他说明</view>
+            </view>
+            <view class="padding-lr-xl padding-bottom-lg text-left" hover-class="none" hover-stop-propagation="false">
+                <text class="text-lg text-gray" hover-class="none" hover-stop-propagation="false">
+                    {{fellowInfo.brefOthers}}
+                </text>
+            </view>
+        </view>
+    </view>
+    <view class="cu-card" hover-class="none" hover-stop-propagation="false" wx:if="{{fellowFriends.length}}" bind:tap="gotoContact">
+        <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+            <view class="cu-bar margin-left-lg" hover-class="none" hover-stop-propagation="false">
+                <view class="text-lg" hover-class="none" hover-stop-propagation="false">Ta的好友</view>
+            </view>
+            <view class="cu-avatar-group margin">
+                <view class="cu-avatar round lg" wx:for="{{fellowFriends}}" wx:if="{{index <= 9}}" wx:key="_id" style="background-image:url({{item.profile.avatarUrl}});">
+                    {{item.profile.avatarUrl ? '' : (item.profile.nickName[0] || item._id[0])}}
+                </view>
+            </view>
+            <button class="cu-btn bg-grey shadow" bind:tap="gotoContact">更多</button>
+        </view>
+    </view>
+    <view class="cu-card" hover-class="none" hover-stop-propagation="false">
+        <view class="cu-item shadow shadow-gray" hover-class="none" hover-stop-propagation="false">
+            <view class="cu-bar margin-left-lg" hover-class="none" hover-stop-propagation="false">
+                <view class="text-lg" hover-class="none" hover-stop-propagation="false">帖子</view>
+            </view>
+            <scroll-view scroll-x class="bg-grey nav text-center">
+                <view class="cu-item {{postDisplayTabSelection === 'authored' ? 'text-bold':''}}" bindtap="postDisplayTabSelect" data-tab="authored">
+                    <text class="cuIcon-write{{postDisplayTabSelection === 'authored' ? 'fill':''}}"></text>
+                    Ta发布的
+                </view>
+                <view class="cu-item {{postDisplayTabSelection === 'liked' ? 'text-bold':''}}" bindtap="postDisplayTabSelect" data-tab="liked">
+                    <text class="cuIcon-like{{postDisplayTabSelection === 'liked' ? 'fill':''}}"></text>
+                    Ta点赞的
+                </view>
+                <view class="cu-item {{postDisplayTabSelection === 'commented' ?'text-bold':''}}" bindtap="postDisplayTabSelect" data-tab="commented">
+                    <text class="cuIcon-comment{{postDisplayTabSelection === 'commented' ?'fill':''}}"></text>
+                    Ta评论的
+                </view>
+            </scroll-view>
+            <view wx:if="{{(postDisplayTabSelection === 'authored' && !userAuthoredPosts.length) || (postDisplayTabSelection === 'liked' && !userLikedPosts.length) || (postDisplayTabSelection === 'commented' && !userCommentedPosts.length)}}" class="cu-bar text-center text-lg text-gray" hover-class="none" hover-stop-propagation="false">
+                <text style="width: 100%;min-height: 4rem;" selectable="false" space="false" decode="false">
+                    (暂无)
+                </text>
+            </view>
+            <post-item wx:if="{{postDisplayTabSelection === 'authored'}}" wx:for="{{userAuthoredPosts}}" wx:key="_id" post="{{item}}" bind:like="gotoPost" bind:unlike="gotoPost" bind:comment="gotoPost"></post-item>
+            <post-item wx:if="{{postDisplayTabSelection === 'liked'}}" wx:for="{{userLikedPosts}}" wx:key="_id" post="{{item}}" bind:like="gotoPost" bind:unlike="gotoPost" bind:comment="gotoPost"></post-item>
+            <post-item wx:if="{{postDisplayTabSelection === 'commented'}}" wx:for="{{userCommentedPosts}}" wx:key="_id" post="{{item}}" bind:like="gotoPost" bind:unlike="gotoPost" bind:comment="gotoPost"></post-item>
+        </view>
+    </view>
+    <view class="padding flex flex-direction">
+        <button wx:if="{{fellowUser.friendship.isFriendOfMine && !fellowUser.friendship.blacklisted}}" class="cu-btn bg-red margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="unfriend">
+            解除好友
+        </button>
+        <button wx:if="{{!fellowUser.friendship.blacklisted}}" class="cu-btn bg-black margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="blacklistFriend">
+            拉黑
+        </button>
+        <button wx:if="{{fellowUser.friendship.blacklisted}}" class="cu-btn bg-grey margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="unblacklistFriend">
+            解除拉黑
+        </button>
+    </view>
+</view>

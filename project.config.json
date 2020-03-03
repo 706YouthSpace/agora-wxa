@@ -1,0 +1,101 @@
+{
+	"description": "706Agora",
+	"packOptions": {
+		"ignore": []
+	},
+	"miniprogramRoot": "build/",
+	"compileType": "miniprogram",
+	"libVersion": "2.10.0",
+	"projectname": "agora-wxa",
+	"scripts": {
+		"beforeCompile": "npm run build",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"enhance": false,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": true,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"bundle": true
+	},
+	"appid": "wx46d68a9da9163dcf",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 3,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/editor/editor",
+					"pathName": "pages/editor/editor",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/fellow/fellow",
+					"pathName": "pages/fellow/fellow",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/contact/contact",
+					"pathName": "pages/contact/contact",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mprofile/mprofile",
+					"pathName": "pages/mprofile/mprofile",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/post/post",
+					"pathName": "pages/post/post",
+					"scene": null
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,25 @@
+<custom-header back-btn-enabled="{{backBtnEnabled}}">
+    <view slot="header-left" class="" hover-class="none" hover-stop-propagation="false">返回</view>
+    <view slot="header-title" class="" hover-class="none" hover-stop-propagation="false">
+        帖子
+    </view>
+</custom-header>
+<view class="container">
+    <post-item post="{{post}}" is-detail="{{true}}" bind:like="markPostLiked" bind:unlike="markPostUnliked" bind:comment="focusOn"></post-item>
+</view>
+<view class="cu-bar foot input {{inputBottomHeight!=0?'cur':''}}" style="bottom:{{inputBottomHeight}}px" catch:tap="focusOn">
+    <view class="action">
+        <text class="cuIcon-keyboard text-grey"></text>
+    </view>
+    <textarea class="solid-bottom" wx:if="{{!textareaHidden}}" value="{{commentDraft}}" auto-focus="{{true}}" auto-height="true" confirm-hold="false" bindconfirm="commitComment" bindfocus="startComment" bindblur="stopComment" bindinput="onInput" adjust-position="{{false}}" maxlength="600" cursor-spacing="10"></textarea>
+    <view class="pseudo-textarea solid-bottom" wx:if="{{textareaHidden}}" style="flex: 1; height: 18px;">
+        {{commentDraft}}
+    </view>
+    <view class="action">
+        <view class="cuIcon-cameraadd text-grey" catch:tap="chooseImages">
+            <view class="cu-tag badge" wx:if="{{imgDraft.length}}">{{imgDraft.length}}</view>
+        </view>
+    </view>
+    <button class="cu-btn bg-green shadow" catch:tap="commitComment">发布</button>
+</view>
+<application-dialog active="{{dialogActive}}" kind="{{dialogKind}}"></application-dialog>

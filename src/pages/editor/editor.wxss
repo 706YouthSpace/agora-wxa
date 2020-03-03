@@ -1,0 +1,3 @@
+.container textarea {
+    min-height: 25vh;
+}

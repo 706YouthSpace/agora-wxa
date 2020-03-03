@@ -1,0 +1,23 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/editor/editor",
+        "pages/fellow/fellow",
+        "pages/contact/contact",
+        "pages/mprofile/mprofile",
+        "pages/post/post"
+    ],
+    "requiredBackgroundModes": [
+        "audio"
+    ],
+    "window": {
+        "navigationStyle": "custom"
+    },
+    "usingComponents": {
+        "custom-header": "/components/custom-header/custom-header",
+        "basic-layout": "/components/basic-layout/basic-layout",
+        "post-item": "/components/post-item/post-item",
+        "application-dialog": "/components/application-dialog/application-dialog"
+    },
+	"plugins": {}
+}

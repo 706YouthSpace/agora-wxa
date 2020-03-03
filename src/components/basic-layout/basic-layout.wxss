@@ -1,0 +1,41 @@
+
+.layout {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+.layout .body {
+    padding-bottom: 120rpx;
+}
+.layout .header {
+    z-index: 100;
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+.layout .footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.layout .footer .xplus [class*='cuIcon-'] {
+    position: absolute;
+	width: 90rpx;
+	z-index: 2;
+	height: 90rpx;
+	border-radius: 50%;
+	line-height: 70rpx;
+	font-size: 50rpx;
+	top: -35rpx;
+	left: 0;
+	right: 0;
+	margin: auto;
+	padding: 0;
+}
+
+.layout .footer .active {
+    color: var(--green);
+}

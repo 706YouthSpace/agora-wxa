@@ -1,0 +1,47 @@
+/* page {
+  padding-top: 100rpx;
+} */
+.cu-form-group .title {
+    min-width: calc(4em + 30rpx);
+}
+
+#gender-switch {
+    flex: 1;
+}
+
+#gender-switch switch .wx-switch-input {
+	background: var(--red) !important;
+}
+
+#gender-switch switch[checked] .wx-switch-input {
+	background: var(--blue) !important;
+}
+
+#region-switch .picker {
+	text-align: left !important;
+}
+
+/* .textarea-placeholder {
+    white-space: pre-line !important;
+    color: red;
+} */
+
+.long-text {
+    min-height: 9rem !important;
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.title-label {
+    top: 4rem;
+    left: 0.5rem;
+    position: absolute;
+}
+
+.overlay-button {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
