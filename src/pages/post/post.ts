@@ -105,7 +105,6 @@ export class PostPage extends CivilizedPage {
             return;
         }
         const commentDraft = inputValue || this.commentDraft;
-        console.log('WTF', commentDraft);
         this.inputBottomHeight = 0;
         if (!this.post) {
             return;

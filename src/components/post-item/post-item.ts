@@ -36,7 +36,7 @@ export class PostItemComponent extends CivilizedComponent {
     adminTarget?: Post;
 
     @wxaViewProperty()
-    adminTargetBref?: string = 'wtf';
+    adminTargetBref?: string = '';
 
     constructor() {
         super();
