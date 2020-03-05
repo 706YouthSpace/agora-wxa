@@ -139,7 +139,7 @@
                             </view>
                             <view id="profile-detail-btn" hover-class="none" hover-stop-propagation="false">
                                 <view class="" hover-class="none" hover-stop-propagation="false">
-                                    <button class="cu-btn bg-grey shadow-blur round" bind:tap="gotoProfileEditing">
+                                    <button class="cu-btn text-sm bg-grey shadow-blur round" bind:tap="gotoProfileEditing">
                                         <view wx:if="{{user.activated}}">修改资料</view>
                                         <view wx:else>填写详细资料，申请成为正式会员</view>
                                     </button>
