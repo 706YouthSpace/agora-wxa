@@ -43,10 +43,10 @@
                                     </view>
                                     <view class="desc text-gray text-sm">
                                         <view class="" hover-class="none" hover-stop-propagation="false" wx:if="{{item.profile.organization || item.profile.position}}">
-                                            {{(item.profile.organization || '') + ' '}}{{item.profile.position}}
+                                            {{item.profile.organization || ''}} {{item.profile.position || ''}}
                                         </view>
                                         <view class="" hover-class="none" hover-stop-propagation="false" wx:if="{{item.profile.school || item.profile.researchField}}">
-                                            {{(item.profile.school || '') + ' '}}{{(item.profile.researchField || '') + '系'}}
+                                            {{item.profile.school || ''}} {{item.profile.researchField ? item.profile.researchField + '系' : ''}}
                                         </view>
                                     </view>
                                     <view class="tags text-grey">

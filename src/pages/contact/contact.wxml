@@ -23,10 +23,10 @@
                     <view class="text-grey">{{contact.profile.nickName}}</view>
                     <view class="text-gray text-sm">
                         <view class="" hover-class="none" hover-stop-propagation="false" wx:if="{{contact.profile.organization || contact.profile.position}}">
-                            {{contact.profile.organization + ' '}}{{contact.profile.position}}
+                            {{(contact.profile.organization || '')}}  {{contact.profile.position || ''}}
                         </view>
                         <view class="" hover-class="none" hover-stop-propagation="false" wx:elif="{{contact.profile.school || contact.profile.researchField}}">
-                            {{contact.profile.school + ' '}}{{contact.profile.researchField + '系'}}
+                            {{(contact.profile.school || '')}}  {{contact.profile.researchField ? contact.profile.researchField + '系' : ''}}
                         </view>
                     </view>
                 </view>
