@@ -11,6 +11,7 @@ import { User } from '../../interfaces/user';
 import _ from '../../vendors/lodash';
 import { Post } from '../../interfaces/post';
 import wxService from '../../services/wx-service';
+import { genderMap } from '../../services/constants';
 
 // tslint:disable: object-literal-sort-keys
 // Page({});
@@ -75,6 +76,9 @@ export class IndexPage extends CivilizedPage {
 
     @wxaViewProperty()
     postSearchResults: Post[] = [];
+
+    @wxaViewProperty()
+    genderMap = genderMap;
 
     @wxaViewProperty()
     mode: '' | 'search' = '';
@@ -235,6 +239,7 @@ export class IndexPage extends CivilizedPage {
         const user = (await gdt.userPromise) as User;
         this.uid = user._id;
         this.user = user;
+
         this.wxUserInfo = await this.wxService.getUserInfo({ lang: "zh_CN" }).catch(() => null);
         this.activeSection = this.activeSection || (user.activated ? '人物' : '广场');
         if (!this.wxUserInfo) {

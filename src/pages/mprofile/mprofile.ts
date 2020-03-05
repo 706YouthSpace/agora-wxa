@@ -2,8 +2,6 @@ import _ from '../../vendors/lodash';
 import { CivilizedPage, WxaPage, wxaViewProperty, wxaViewMethod, wxaViewParam } from '../../services/wrapper';
 import { gdt } from '../../app';
 import wxService from '../../services/wx-service';
-
-
 const PS_PLACEHOLDER = `讲讲您的个人经历如教育、工作、项目、看过的书，做过的事等。
 请分行陈列，例如：
 （1）2016年参加某夏令营，为乡村的孩子开设了音乐与舞蹈的夏令营课程。
@@ -32,7 +30,15 @@ const plMap: any = {
     brefExperience: PS_PLACEHOLDER
 };
 
-const predefinedTags = '学术，科技，人文，艺术，音乐，摄影，戏剧，公益，心理，电影，纪录片，美术'.split('，');
+// const predefinedTags = '学术，科技，人文，艺术，音乐，摄影，戏剧，公益，心理，电影，纪录片，美术'.split('，');
+const predefinedTags = '学术，公益，文艺，探索，待定'.split('，');
+
+const genderPickerProfile = [
+    { key: '暂不透露', value: undefined },
+    { key: '男性', value: 'male' },
+    { key: '女性', value: 'female' },
+    { key: '多元性别', value: 'diversity' },
+];
 
 // const LONG_TEXT_TPL = `（1）
 // （2）
@@ -65,6 +71,12 @@ export class ProfileModificationPage extends CivilizedPage {
     @wxaViewProperty()
     avaliableTags: string[] = _.clone(predefinedTags);
 
+    @wxaViewProperty()
+    genderProfile = genderPickerProfile;
+
+    @wxaViewProperty()
+    genderIndex = 0;
+
     submitionLock: boolean = false;
 
     constructor() {
@@ -85,21 +97,23 @@ export class ProfileModificationPage extends CivilizedPage {
                     this.profile[k] = plMap[k];
                 }
             }
+            if (this.profile.gender) {
+                this.genderIndex = _.findIndex(this.genderProfile, { value: this.profile.gender });
+            }
         }
     }
 
     async prepareUserPreferences() {
-        this.originalPreferences = _.get(await gdt.userPreference, 'profilePrivaicy') || {};
+        this.originalPreferences = _.get(await gdt.userPreference, 'profilePrivacy') || {};
         this.preferences = _.cloneDeep(this.originalPreferences);
     }
 
     @wxaViewMethod()
-    toggleGender(@wxaViewParam('detail.value') val: boolean) {
-
+    bindPickGender(@wxaViewParam('detail.value') val: number) {
         if (this.profile) {
-            this.profile.gender = val ? 'male' : 'female';
+            this.profile.gender = this.genderProfile[val].value;
+            this.genderIndex = _.findIndex(this.genderProfile, { value: this.profile.gender });
         }
-
     }
 
     @wxaViewMethod()
@@ -301,6 +315,7 @@ export class ProfileModificationPage extends CivilizedPage {
         this.submitionLock = true;
         const normalizedProfile = _.clone(this.profile || {});
         for (const k in plMap) {
+
             if (plMap.hasOwnProperty(k)) {
                 if (normalizedProfile[k] === plMap[k]) {
                     // tslint:disable-next-line: no-dynamic-delete
@@ -322,6 +337,9 @@ export class ProfileModificationPage extends CivilizedPage {
                     if (normalizedProfile[x] === this.userInfo![x]) {
                         // tslint:disable-next-line: no-dynamic-delete
                         delete normalizedProfile[x];
+                    }
+                    if (normalizedProfile[x] === undefined) {
+                        normalizedProfile[x] = null;
                     }
                 }
             }

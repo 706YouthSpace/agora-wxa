@@ -5,6 +5,7 @@ import wxService from '../../services/wx-service';
 import { User } from '../../interfaces/user';
 import { UserAuthordPostsList, UserLikedPostsList, UserCommentedPostsList } from '../../services/posts';
 import { Post } from '../../interfaces/post';
+import { genderMap } from '../../services/constants';
 
 // tslint:disable: object-literal-sort-keys
 // Page({});
@@ -42,6 +43,10 @@ export class FellowPage extends CivilizedPage {
 
     @wxaViewProperty()
     user?: User;
+
+    @wxaViewProperty()
+    genderMap = genderMap;
+
 
     constructor() {
         super();

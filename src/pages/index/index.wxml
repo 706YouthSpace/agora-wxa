@@ -32,7 +32,7 @@
                             <view class="cu-bar bg-shadeBottom"></view>
                             <view class="cu-avatar round xl shadow bg-black shadow-lg" style="background-image:url({{item.profile.avatarUrl}});">
                                 {{item.profile.avatarUrl ? '' : (item.profile.nickName[0] || item._id[0])}}
-                                <view wx:if="{{item.profile.gender || item.profile.gender === false}}" class="cu-tag {{item.profile.gender === 'female' ? 'badge cuIcon-female bg-pink' : ''}} {{item.profile.gender === 'male' ? 'badge cuIcon-male bg-blue' : ''}}"></view>
+                                <!-- <view wx:if="{{item.profile.gender || item.profile.gender === false}}" class="cu-tag {{item.profile.gender === 'female' ? 'badge cuIcon-female bg-pink' : ''}} {{item.profile.gender === 'male' ? 'badge cuIcon-male bg-blue' : ''}}"></view> -->
                             </view>
                         </view>
                         <view class="cu-list personal-desc">
@@ -120,22 +120,29 @@
                                     </view>
                                 </view>
                                 <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
-                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false" wx:if="{{user.profile && user.profile.gender}}">
-                                        {{user.profile.gender === 'male' ? '男' : ''}}
-                                        {{user.profile.gender === 'female' ? '女' : ''}}
+                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                        {{genderMap[user.profile.gender] || '暂不透露'}}
                                     </view>
                                 </view>
                             </view>
                             <view class="flex personal-general-desc" hover-class="none" hover-stop-propagation="false">
                                 <view class="flex-sub" hover-class="none" hover-stop-propagation="false">
                                     <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
-                                        家乡:
+                                        家乡
                                     </view>
                                 </view>
                                 <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
                                     <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
                                         {{user.profile.province}} {{user.profile.city}}
                                     </view>
+                                </view>
+                            </view>
+                            <view id="profile-detail-btn" hover-class="none" hover-stop-propagation="false">
+                                <view class="" hover-class="none" hover-stop-propagation="false">
+                                    <button class="cu-btn bg-grey shadow-blur round" bind:tap="gotoProfileEditing">
+                                        <view wx:if="{{user.activated}}">修改资料</view>
+                                        <view wx:else>填写详细资料，申请成为正式会员</view>
+                                    </button>
                                 </view>
                             </view>
                         </view>
@@ -159,9 +166,7 @@
                             {{item.profile.avatarUrl ? '' : (item.profile.nickName[0] || item._id[0])}}
                         </view>
                     </view>
-                    <button class="cu-btn bg-grey shadow text-right" bindtap="gotoContact">
-                        更多
-                    </button>
+                    <button class="cu-btn bg-grey shadow text-right" bindtap="gotoPro">更多</button>
                 </view>
             </view>
             <view class="cu-card" hover-class="none" hover-stop-propagation="false">
