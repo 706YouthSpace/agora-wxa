@@ -2,6 +2,7 @@ import nestedProxy from './nested-proxy';
 import EventEmitter from '../vendors/events';
 import _ from '../vendors/lodash';
 import { carefulMerge } from './careful-merge';
+import { dataChannel } from '../services/data-channel';
 
 
 export class FancyObjIndex<T extends object> {
@@ -13,13 +14,11 @@ export class FancyObjIndex<T extends object> {
 
     deProxySymbol: symbol = Symbol('FancyObjIndex Deproxy Symbol');
 
-    eventChannel: EventEmitter;
+    eventChannel: EventEmitter = dataChannel;
 
     modifiers: Array<(obj: T) => void> = [];
 
-    constructor(eventChannel: EventEmitter) {
-        this.eventChannel = eventChannel;
-
+    constructor() {
         const msgReg: Array<[string, object, string?]> = [];
         let routineFlag = false;
         const msgRoutine = () => {

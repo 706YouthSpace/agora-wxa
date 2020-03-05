@@ -7,7 +7,6 @@ import { User } from '../interfaces/user';
 import { Post } from '../interfaces/post';
 import { humanReadableNumber } from '../utils/number-display';
 import { FancyObjIndex } from '../utils/fancy-obj-index';
-import { dataChannel } from './data-channel';
 import { carefulMerge } from '../utils/careful-merge';
 
 const API_BASE_URI = 'https://api.wxa1.706er.com';
@@ -41,11 +40,9 @@ export class GlobalDataContext extends EventEmitter {
     isLoading: boolean = false;
     pendingRequests: number = 0;
 
-
-    dataChannel = dataChannel;
     dataIndex = {
-        user: new FancyObjIndex<User>(this.dataChannel),
-        post: new FancyObjIndex<Post>(this.dataChannel)
+        user: new FancyObjIndex<User>(),
+        post: new FancyObjIndex<Post>()
     };
 
     dialogs: { [k: string]: DialogProfile } = {};
