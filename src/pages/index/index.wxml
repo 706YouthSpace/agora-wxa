@@ -120,8 +120,8 @@
                                     </view>
                                 </view>
                                 <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
-                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false" wx:if="{{user.profile && user.profile.gender}}">
-                                        {{metaBook.gender[user.profile.gender]}}
+                                    <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
+                                        {{genderMap[user.profile.gender] || '暂不透露'}}
                                     </view>
                                 </view>
                             </view>

@@ -3,7 +3,7 @@ import _ from '../vendors/lodash';
 import wxService from './wx-service';
 import { RequestOptions, request, upload, UploadOptions } from './request';
 import dayjs from '../vendors/dayjs';
-import { User, Genders } from '../interfaces/user';
+import { User } from '../interfaces/user';
 import { Post } from '../interfaces/post';
 import { humanReadableNumber } from '../utils/number-display';
 import { FancyObjIndex } from '../utils/fancy-obj-index';
@@ -49,7 +49,6 @@ export class GlobalDataContext extends EventEmitter {
     };
 
     dialogs: { [k: string]: DialogProfile } = {};
-    metaBook: { [k: string]: any } = {}
 
     constructor() {
         super();
@@ -66,11 +65,6 @@ export class GlobalDataContext extends EventEmitter {
             this.emit('myInfo', user.profile);
 
         });
-        var GenderBook: { [k: string]: any } = {}
-        for (var i = 0; i < Genders.types.length; i++) {
-            GenderBook[Genders.values[i]] = Genders.types[i]
-        }
-        this.metaBook['gender'] = GenderBook
 
         this.on('myInfo', (profile) => {
             if (this.user) {

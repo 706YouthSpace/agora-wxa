@@ -5,6 +5,7 @@ import wxService from '../../services/wx-service';
 import { User } from '../../interfaces/user';
 import { UserAuthordPostsList, UserLikedPostsList, UserCommentedPostsList } from '../../services/posts';
 import { Post } from '../../interfaces/post';
+import { genderMap } from '../../services/constants';
 
 // tslint:disable: object-literal-sort-keys
 // Page({});
@@ -44,7 +45,7 @@ export class FellowPage extends CivilizedPage {
     user?: User;
 
     @wxaViewProperty()
-    metaBook?: { [k: string]: any }
+    genderMap = genderMap;
 
 
     constructor() {
@@ -67,7 +68,6 @@ export class FellowPage extends CivilizedPage {
         });
 
         this.setData({ backBtnEnabled: getCurrentPages()[0] !== this });
-        this.metaBook = gdt.metaBook
 
         gdt.userPromise.then((r) => {
             this.user = r;

@@ -23,8 +23,8 @@
         <!-- <view id="gender-switch" hover-class="none" hover-stop-propagation="false">
             <switch class="switch-sex" checked="{{profile.gender === 'male'}}" bindchange="toggleGender"></switch>
         </view> -->
-        <picker bindchange="bindPickerChange" value="{{this.genderIndex}}" range="{{genders.types}}">
-            <view>{{genders.types[genderIndex]}}</view>
+        <picker bindchange="bindPickGender" value="{{genderIndex}}" range="{{genderProfile}}" range-key="key">
+            <view class="picker">{{genderProfile[genderIndex].key}}</view>
         </picker>
     </view>
     <view class="cu-form-group" wx:if="{{!profile.country || profile.country === '中国' || profile.country === 'China'}}">

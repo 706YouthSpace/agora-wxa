@@ -32,7 +32,7 @@
                         </view>
                         <view class="flex-treble" hover-class="none" hover-stop-propagation="false">
                             <view class="text-md text-gray" hover-class="none" hover-stop-propagation="false">
-                                {{metaBook.gender[fellowInfo.gender]}}
+                                {{genderMap[fellowInfo.gender] || '暂不透露'}}
                             </view>
                         </view>
                     </view>
