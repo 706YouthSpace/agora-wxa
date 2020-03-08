@@ -64,7 +64,7 @@
         <button wx:if="{{user.privileged && fellowUser.activated}}" class="cu-btn bg-red margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="deactivate">
             管理： 停用用户
         </button>
-        <button wx:if="{{user.activated && !fellowUser.friendship.isFriendOfMine}}" class="cu-btn bg-green margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="friend">
+        <button wx:if="{{user.activated && !fellowUser.friendship.isFriendOfMine && user._id !== fellowUser._id}}" class="cu-btn bg-green margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="friend">
             加为好友
         </button>
     </view>
@@ -246,7 +246,7 @@
         <button wx:if="{{fellowUser.friendship.isFriendOfMine && !fellowUser.friendship.blacklisted}}" class="cu-btn bg-red margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="unfriend">
             解除好友
         </button>
-        <button wx:if="{{!fellowUser.friendship.blacklisted}}" class="cu-btn bg-black margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="blacklistFriend">
+        <button wx:if="{{!fellowUser.friendship.blacklisted && user._id !== fellowUser._id}}" class="cu-btn bg-black margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="blacklistFriend">
             拉黑
         </button>
         <button wx:if="{{fellowUser.friendship.blacklisted}}" class="cu-btn bg-grey margin-tb-sm lg shadow" role="button" aria-disabled="false" bindtap="unblacklistFriend">
