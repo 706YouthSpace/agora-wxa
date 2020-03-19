@@ -77,6 +77,9 @@ export class ProfileModificationPage extends CivilizedPage {
     @wxaViewProperty()
     genderIndex = 0;
 
+    @wxaViewProperty()
+    plMap = plMap;
+
     submitionLock: boolean = false;
 
     constructor() {
@@ -92,11 +95,11 @@ export class ProfileModificationPage extends CivilizedPage {
         if (this.profile) {
             this.region = [this.profile.province || '北京', this.profile.city || '海淀'];
 
-            for (const k in plMap) {
-                if (plMap.hasOwnProperty(k) && !this.profile[k]) {
-                    this.profile[k] = plMap[k];
-                }
-            }
+            // for (const k in plMap) {
+            //     if (plMap.hasOwnProperty(k) && !this.profile[k]) {
+            //         this.profile[k] = plMap[k];
+            //     }
+            // }
             if (this.profile.gender) {
                 this.genderIndex = _.findIndex(this.genderProfile, { value: this.profile.gender });
             }
@@ -126,7 +129,8 @@ export class ProfileModificationPage extends CivilizedPage {
 
     @wxaViewMethod()
     onRegionChange(@wxaViewParam('detail.value') val: string[]) {
-        const province = val[0].substring(0, 2);
+        // tslint:disable-next-line: no-magic-numbers
+        const province = (val[0].startsWith('内蒙古') || val[0].startsWith('黑龙江')) ? val[0].substring(0, 3) : val[0].substring(0, 2);
         let city = val[1];
         if (val[0] === val[1]) {
             city = val[2];
@@ -187,13 +191,13 @@ export class ProfileModificationPage extends CivilizedPage {
             return;
         }
 
-        if (val.endsWith('\n') && (val.length > this.profile[tpl].length)) {
-            const lns = val.split(/\n?\(\d+\)/);
+        // if (val.endsWith('\n') && (val.length > this.profile[tpl].length)) {
+        //     const lns = val.split(/\n?\(\d+\)/);
 
-            this.profile[tpl] = val + `(${lns.length}) `;
+        //     this.profile[tpl] = val + `(${lns.length}) `;
 
-            return;
-        }
+        //     return;
+        // }
 
         this.profile[tpl] = val;
     }

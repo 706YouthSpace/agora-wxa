@@ -7,7 +7,7 @@
 
 #gender-switch {
     flex: 1;
-}
+} 
 
 #gender-switch switch .wx-switch-input {
 	background: var(--red) !important;
@@ -44,4 +44,8 @@
     width: 100%;
     height: 100%;
     opacity: 0;
+}
+
+.textarea-placeholder {
+    white-space: pre-wrap;
 }

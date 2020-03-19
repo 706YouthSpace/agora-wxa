@@ -133,7 +133,7 @@
             <view class="cu-tag bg-gray title-label" wx:else>公开</view>
         </view>
         <view class="title">个人经历</view>
-        <textarea class="long-text" data-pl="brefExperience" maxlength="400" bindinput="injectBrackets" value="{{profile.brefExperience}}" bindblur="toggleFakePlaceholder" bindfocus="toggleFakePlaceholder"></textarea>
+        <textarea class="long-text" data-pl="brefExperience" placeholder="{{plMap['brefExperience']}}" placeholder-class="textarea-placeholder" maxlength="400" bindinput="injectBrackets" value="{{profile.brefExperience}}"></textarea>
     </view>
     <view class="cu-form-group align-start">
         <view class="cu-capsule radius pos-relative" data-pl="brefSkills">
@@ -146,7 +146,7 @@
             <view class="cu-tag bg-gray title-label" wx:else>公开</view>
         </view>
         <view class="title">知识技能</view>
-        <textarea class="long-text" data-pl="brefSkills" maxlength="400" bindinput="injectBrackets" value="{{profile.brefSkills}}" bindblur="toggleFakePlaceholder" bindfocus="toggleFakePlaceholder"></textarea>
+        <textarea class="long-text" data-pl="brefSkills" placeholder="{{plMap['brefSkills']}}"  maxlength="400" bindinput="injectBrackets" value="{{profile.brefSkills}}"></textarea>
     </view>
     <view class="cu-form-group align-start">
         <view class="cu-capsule radius pos-relative" data-pl="brefConcerns">
@@ -159,7 +159,7 @@
             <view class="cu-tag bg-gray title-label" wx:else>公开</view>
         </view>
         <view class="title">想做的事</view>
-        <textarea class="long-text" data-pl="brefConcerns" maxlength="400" bindinput="injectBrackets" value="{{profile.brefConcerns}}" bindblur="toggleFakePlaceholder" bindfocus="toggleFakePlaceholder"></textarea>
+        <textarea class="long-text" data-pl="brefConcerns" placeholder="{{plMap['brefConcerns']}}" maxlength="400" bindinput="injectBrackets" value="{{profile.brefConcerns}}"></textarea>
     </view>
     <view class="cu-form-group align-start">
         <view class="cu-capsule radius pos-relative" data-pl="brefOthers">
