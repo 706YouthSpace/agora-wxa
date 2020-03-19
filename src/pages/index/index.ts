@@ -356,8 +356,7 @@ export class IndexPage extends CivilizedPage {
             // this.activeSection = '人物';
             const currentProfile = await gdt.userInfo;
             if (_.isEmpty(currentProfile)) {
-                const newUser = await gdt.updateProfile(userInfo);
-                gdt.emit('myInfo', newUser.profile);
+                await gdt.updateProfile(userInfo);
             }
         }
     }

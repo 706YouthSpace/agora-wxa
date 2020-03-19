@@ -58,18 +58,14 @@ export class GlobalDataContext extends EventEmitter {
                     carefulMerge(user, newUser);
                 }
             }
-            this.emit('myPreference', user.preferences);
-            this.emit('myInfo', user.profile);
+
+            this.emit('newMe', user);
 
         });
 
-        this.on('myInfo', (profile) => {
+        this.on('newMe', (newMe: User) => {
             if (this.user) {
-                if (this.user.profile) {
-                    carefulMerge(this.user.profile, profile);
-                } else {
-                    this.user.profile = profile;
-                }
+                carefulMerge(this.user, newMe);
             }
         });
 
@@ -162,8 +158,8 @@ export class GlobalDataContext extends EventEmitter {
         }
 
         return new Promise((resolve, _reject) => {
-            this.once('myInfo', (userInfo) => {
-                return resolve(userInfo);
+            this.once('newMe', (user) => {
+                return resolve(user.profile);
             });
         });
     }
@@ -175,8 +171,8 @@ export class GlobalDataContext extends EventEmitter {
         }
 
         return new Promise((resolve, _reject) => {
-            this.once('myPreference', (userPreferences) => {
-                return resolve(userPreferences);
+            this.once('newMe', (user) => {
+                return resolve(user.preferences);
             });
         });
     }
@@ -379,7 +375,7 @@ export class GlobalDataContext extends EventEmitter {
             body: profile
         });
 
-        this.emit('myInfo', result.profile);
+        this.emit('newMe', result);
 
         return result;
     }
@@ -389,7 +385,7 @@ export class GlobalDataContext extends EventEmitter {
             body: privacy
         });
 
-        this.emit('myPreference', result.preferences);
+        this.emit('newMe', result);
 
         return result;
     }
