@@ -46,7 +46,7 @@
                                             {{item.profile.organization || ''}} {{item.profile.position || ''}}
                                         </view>
                                         <view class="" hover-class="none" hover-stop-propagation="false" wx:if="{{item.profile.school || item.profile.researchField}}">
-                                            {{item.profile.school || ''}} {{item.profile.researchField ? item.profile.researchField + '系' : ''}}
+                                            {{item.profile.school || ''}} {{item.profile.researchField ? item.profile.researchField : ''}}
                                         </view>
                                     </view>
                                     <view class="tags text-grey">

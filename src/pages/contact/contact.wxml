@@ -26,7 +26,7 @@
                             {{(contact.profile.organization || '')}}  {{contact.profile.position || ''}}
                         </view>
                         <view class="" hover-class="none" hover-stop-propagation="false" wx:elif="{{contact.profile.school || contact.profile.researchField}}">
-                            {{(contact.profile.school || '')}}  {{contact.profile.researchField ? contact.profile.researchField + '系' : ''}}
+                            {{(contact.profile.school || '')}}  {{contact.profile.researchField ? contact.profile.researchField : ''}}
                         </view>
                     </view>
                 </view>
